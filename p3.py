@@ -11,3 +11,4 @@ for i in range (len(n)):
     if n[i]>n[i+1]:
         is_sorted=False
         break
+print(is_sorted)
