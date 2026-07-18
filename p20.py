@@ -12,4 +12,3 @@ class Solution:
             elif move == 'L':
                 x -= 1
         
-        return x == 0 and y == 0
