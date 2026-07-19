@@ -10,4 +10,4 @@ class Solution:
             elif num < 100:
                 double += num
 
-        return single > total - single or double > total - double
+        return single > total - single or double > total -
