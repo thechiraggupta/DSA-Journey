@@ -12,4 +12,6 @@ class Solution:
                 if not stack or stack.pop() != mapping[char]:
                     return False
             else:
-                stack.append(cha
+                stack.append(char)
+
+        return len(stack) == 0
