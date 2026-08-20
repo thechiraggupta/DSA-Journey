@@ -1,25 +1,26 @@
-def insert(intervals, newInterval):
-    result = []
-    start, end = newInterval
-    i = 0
-    n = len(intervals)
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        res = []
+        i = 0
+        n = len(intervals)
 
-    # 1. Add intervals that come completely before newInterval
-    while i < n and intervals[i][1] < start:
-        result.append(intervals[i])
-        i += 1
+        # Intervals before newInterval
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
 
-    # 2. Merge all overlapping intervals
-    while i < n and intervals[i][0] <= end:
-        start = min(start, intervals[i][0])
-        end = max(end, intervals[i][1])
-        i += 1
+        # Merge overlapping intervals
+        while i < n and intervals[i][0] <= newInterval[1]:
+            newInterval[0] = min(newInterval[0], intervals[i][0])
+            newInterval[1] = max(newInterval[1], intervals[i][1])
+            i += 1
 
-    result.append([start, end])
+        # Add merged interval
+        res.append(newInterval)
 
-    # 3. Add remaining intervals
-    while i < n:
-        result.append(intervals[i])
-        i += 1
+        # Remaining intervals
+        while i < n:
+            res.append(intervals[i])
+            i += 1
 
-    return result
+        return res
