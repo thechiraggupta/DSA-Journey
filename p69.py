@@ -1,31 +1,28 @@
 class Solution:
     def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
-        # Length must be equal
+
         if len(s1) + len(s2) != len(s3):
             return False
 
-        # dp[j] means:
-        # Can we form s3[:i+j] using s1[:i] and s2[:j]?
-        dp = [False] * (len(s2) + 1)
+        m = len(s1)
+        n = len(s2)
 
-        dp[0] = True
+        dp = [[False] * (n + 1) for _ in range(m + 1)]
 
-        # Using only s2
-        for j in range(1, len(s2) + 1):
-            dp[j] = dp[j - 1] and s2[j - 1] == s3[j - 1]
+        dp[0][0] = True
 
-        # Process s1
-        for i in range(1, len(s1) + 1):
-            # Using only s1
-            dp[0] = dp[0] and s1[i - 1] == s3[i - 1]
+        for i in range(m + 1):
+            for j in range(n + 1):
 
-            for j in range(1, len(s2) + 1):
+                if i == 0 and j == 0:
+                    continue
+
                 # Take character from s1
-                take_s1 = dp[j] and s1[i - 1] == s3[i + j - 1]
+                if i > 0 and dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]:
+                    dp[i][j] = True
 
                 # Take character from s2
-                take_s2 = dp[j - 1] and s2[j - 1] == s3[i + j - 1]
+                if j > 0 and dp[i][j - 1] and s2[j - 1] == s3[i + j - 1]:
+                    dp[i][j] = True
 
-                dp[j] = take_s1 or take_s2
-
-        return dp[len(s2)]
+        return dp[m][n]
